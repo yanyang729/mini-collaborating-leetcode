@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Problem } from '../../data-structure/problem'
+import { Problem } from '../../data-structure/problem';
 
 const PROBLEMS: Problem[] = [
   {
@@ -18,7 +18,7 @@ const PROBLEMS: Problem[] = [
 @Component({
   selector: 'app-problem-list',
   templateUrl: './problem-list.component.html',
-  styleUrls: ['./problem-list.component.css']
+  styleUrls: ['./problem-list.component.css'],
 })
 export class ProblemListComponent implements OnInit {
 
@@ -29,7 +29,7 @@ export class ProblemListComponent implements OnInit {
     this.getProblems();
   }
 
-  getProblems(): void{
+  getProblems(): void {
     this.problems = PROBLEMS;
   }
 }
