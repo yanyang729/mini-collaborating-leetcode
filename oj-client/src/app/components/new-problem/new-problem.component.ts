@@ -14,16 +14,18 @@ const DEFAULT_PROBLEM: Problem = Object.freeze({
   templateUrl: 'new-problem.component.html',
   styleUrls: ['new-problem.component.css']
 })
+
 export class NewProblemComponent implements OnInit {
-  newProblem:Problem = Object.assign(DEFAULT_PROBLEM);
+  newProblem:Problem = Object.assign({},DEFAULT_PROBLEM);
   difficulties: string[] = ['easy','medium','hard','super']
 
-  constructor() { }
+  constructor(@Inject('data') private dataService) { }
 
   ngOnInit() {
   }
 
-  addProblem():void{
-
+  addProblem():void {
+    this.dataService.addProblem(this.newProblem);
+    this.newProblem = Object.assign({},DEFAULT_PROBLEM);
   }
 }

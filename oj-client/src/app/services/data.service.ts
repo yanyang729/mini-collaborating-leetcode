@@ -14,5 +14,9 @@ export class DataService {
     return this.problem.find((problem) => problem.id === id);
   }
 
+  addProblem(newproblem:Problem):void {
+    newproblem.id = this.problem.length + 1
+    this.problem.push(newproblem)
+  }
 }
 

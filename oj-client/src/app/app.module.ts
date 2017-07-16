@@ -10,6 +10,7 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
 import { DataService } from './services/data.service';
 
 import { routing } from './app.routes';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { routing } from './app.routes';
     ProblemListComponent,
     ProblemDetailComponent,
     NewProblemComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
