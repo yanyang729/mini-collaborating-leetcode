@@ -1,8 +1,21 @@
 <div class="container">
-  <div class="list-group">
-    <a class="list-group-item" *ngFor="let problem of problems" [routerLink]="['/problems',problem.id]">
-      <strong> {{problem.id}}. {{problem.name}}</strong>
-      <span class="{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}">{{problem.difficulty}}</span>
-    </a>
+
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <app-new-problem></app-new-problem>
+    </div>
   </div>
+
+  <div class="row top-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="list-group">
+        <a class="list-group-item" *ngFor="let problem of problems" [routerLink]="['/problems',problem.id]">
+          <strong> {{problem.id}}. {{problem.name}}</strong>
+          <span class="{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}">{{problem.difficulty}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
 </div>
