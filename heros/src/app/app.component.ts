@@ -7,25 +7,24 @@ export class Hero {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+    <h1>{{title}}</h1>
+    <ul class="nav nav-tabs">
+      <li role="presentation" ><a routerLink="dashboard">Dashboard</a></li>
+      <li role="presentation" ><a routerLink="/heroes">Heroes</a></li>
+    </ul>
+    
+    
+    <div class="container">
+     <router-outlet></router-outlet>
+    </div> 
+  `,
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit{
-  constructor(@Inject('data') private dataService){};
+export class AppComponent{
+  constructor(){};
   title = 'Tour of Heros';
-  heroes: Hero[];
-  selectedHero: Hero;
-  getHeroes():void {
-    this.heroes = this.dataService.getHeroes().then(heroes => this.heroes = heroes);
-  }
 
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
-
-  ngOnInit():void {
-    this.getHeroes();
-  }
 }
 
