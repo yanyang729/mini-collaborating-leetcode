@@ -1,0 +1,14 @@
+{
+  "name": "oj-server",
+  "version": "1.0.0",
+  "description": "restful-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
