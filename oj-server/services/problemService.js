@@ -35,6 +35,13 @@ const getProblems = function () {
     })
 };
 
+const getProblem = function (id) {
+    return new Promise((resolve,reject) => {
+        resolve(problems.find(p => p.id === id));
+    })
+};
+
 module.exports = {
     getProblems,
+    getProblem
 }
