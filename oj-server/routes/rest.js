@@ -18,7 +18,7 @@ router.get('/problems/:id', function(req, res) {
 });
 
 // POST /api/v1/problems
-router.post('/problems',jsonParser, function(req, res) {
+router.post('/problems', jsonParser, function(req, res) {
     problemService.addProblem(req.body)
         .then(function(problem) {
             res.json(problem);

@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
 import { Problem } from '../../data-structure/problem'
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-problem-detail',

@@ -292,7 +292,6 @@ var NewProblemComponent = (function () {
     };
     NewProblemComponent.prototype.addProblem = function () {
         this.dataService.addProblem(this.newProblem).catch(function (error) { return console.log(error.body); });
-        ;
         this.newProblem = Object.assign({}, DEFAULT_PROBLEM);
     };
     return NewProblemComponent;
