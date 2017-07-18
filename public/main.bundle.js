@@ -160,7 +160,8 @@ var routes = [
     }, {
         path: 'problems/:id',
         component: __WEBPACK_IMPORTED_MODULE_2__components_problem_detail_problem_detail_component__["a" /* ProblemDetailComponent */],
-    }, {
+    },
+    {
         path: '**',
         redirectTo: 'problems',
     },
@@ -364,7 +365,9 @@ var ProblemDetailComponent = (function () {
     ProblemDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
-            _this.problem = _this.data.getProblem(+params['id']).then(function (problem) { return _this.problem = problem; });
+            // this.problem = this.data.getProblem(+params['id']);
+            _this.data.getProblem(+params['id'])
+                .then(function (problem) { return _this.problem = problem; });
         });
     };
     return ProblemDetailComponent;
@@ -482,34 +485,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DataService = (function () {
     function DataService(http) {
         this.http = http;
-        // problem: Problem[] = PROBLEMS;
+        // problems: Problem[] = PROBLEMS;
         this._problemSource = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
     }
     DataService.prototype.getProblems = function () {
         var _this = this;
-        // return this.problem;
-        this.http.get('/api/v1/problems').toPromise().then(function (res) { return _this._problemSource.next(res.json()); })
+        // return this.problems;
+        this.http.get('api/v1/problems')
+            .toPromise()
+            .then(function (res) {
+            _this._problemSource.next(res.json());
+        })
             .catch(this.handleError);
         return this._problemSource.asObservable();
     };
     DataService.prototype.getProblem = function (id) {
-        // return this.problem.find((problem) => problem.id === id);
-        return this.http.get("/api/v1/problems/" + id).toPromise()
-            .then(function (res) {
-            // this.getProblems();
-            return res.json;
-        }).catch(this.handleError);
-    };
-    DataService.prototype.addProblem = function (newproblem) {
         var _this = this;
-        // newproblem.id = this.problem.length + 1
-        // this.problem.push(newproblem)
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
-        return this.http.post('/api/v1/problems', newproblem, headers).toPromise()
+        // return this.problems.find( (problem) => problem.id === id);
+        return this.http.get("api/v1/problems/" + id)
+            .toPromise()
             .then(function (res) {
             _this.getProblems();
             return res.json();
-        }).catch(this.handleError);
+        })
+            .catch(this.handleError);
+    };
+    DataService.prototype.addProblem = function (problem) {
+        var _this = this;
+        // problem.id = this.problems.length + 1;
+        // this.problems.push(problem);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        return this.http.post('/api/v1/problems', problem, headers)
+            .toPromise()
+            .then(function (res) {
+            _this.getProblems();
+            return res.json();
+        })
+            .catch(this.handleError);
     };
     DataService.prototype.handleError = function (error) {
         console.error('An error occured', error);

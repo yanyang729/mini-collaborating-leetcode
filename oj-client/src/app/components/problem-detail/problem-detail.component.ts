@@ -9,6 +9,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 })
 export class ProblemDetailComponent implements OnInit {
   problem: Problem;
+
   constructor(
     private route: ActivatedRoute,
     @Inject('data') private data
@@ -16,7 +17,10 @@ export class ProblemDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.problem = this.data.getProblem(+params['id']).then(problem => this.problem = problem);
+      // this.problem = this.data.getProblem(+params['id']);
+      this.data.getProblem(+params['id'])
+        .then(problem => this.problem = problem);
     });
   }
+
 }

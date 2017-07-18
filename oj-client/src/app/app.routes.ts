@@ -17,10 +17,10 @@ const routes: Routes = [
   　path: 'problems/:id',
     component: ProblemDetailComponent,
   },
-  // {
-  //   path: '**',
-  //   redirectTo: 'problems',
-  // },
+  {
+    path: '**',
+    redirectTo: 'problems',
+  },
 ];
 
 export const routing = RouterModule.forRoot(routes);
