@@ -41,6 +41,15 @@ export class DataService {
     // problem.id = this.problems.length + 1;
     // this.problems.push(problem);
     const headers = new Headers({'content-type': 'application/json'});
+    if (!problem.name){
+      problem.name = 'No name given'
+    };
+    if (!problem.desc){
+      problem.desc = 'No description given'
+    };
+    if (!problem.difficulty){
+      problem.difficulty = 'easy'
+    };
     return this.http.post('/api/v1/problems', problem, headers)
       .toPromise()
       .then((res: Response) => {

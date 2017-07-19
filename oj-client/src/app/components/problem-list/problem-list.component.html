@@ -12,8 +12,10 @@
     <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
       <div class="list-group">
         <a class="list-group-item" *ngFor="let problem of problems" [routerLink]="['/problems',problem.id]">
-          <strong> {{problem.id}}. {{problem.name}}</strong>
+
           <span class="{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}">{{problem.difficulty}}</span>
+          <strong> {{problem.id}}. {{problem.name}}</strong>
+
         </a>
       </div>
     </div>

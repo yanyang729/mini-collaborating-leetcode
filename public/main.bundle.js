@@ -277,7 +277,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/new-problem/new-problem.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form #formRef=\"ngForm\">\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <input name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-primary pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n"
+module.exports = "<form #formRef=\"ngForm\" *ngIf=\"auth.isAuthenticated()\">\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <input name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-primary pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n"
 
 /***/ }),
 
@@ -286,6 +286,7 @@ module.exports = "<form #formRef=\"ngForm\">\n  <div class=\"form-group\">\n    
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewProblemComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -300,6 +301,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 
+
 var DEFAULT_PROBLEM = Object.freeze({
     id: 0,
     name: '',
@@ -307,8 +309,9 @@ var DEFAULT_PROBLEM = Object.freeze({
     difficulty: '',
 });
 var NewProblemComponent = (function () {
-    function NewProblemComponent(dataService) {
+    function NewProblemComponent(dataService, auth) {
         this.dataService = dataService;
+        this.auth = auth;
         this.newProblem = Object.assign({}, DEFAULT_PROBLEM);
         this.difficulties = ['easy', 'medium', 'hard', 'super'];
     }
@@ -327,9 +330,10 @@ NewProblemComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/components/new-problem/new-problem.component.css")]
     }),
     __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Inject */])('data')),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object])
 ], NewProblemComponent);
 
+var _a;
 //# sourceMappingURL=new-problem.component.js.map
 
 /***/ }),
@@ -418,7 +422,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".difficulty {\n  min-width: 65px;\n  margin-right: 10px;\n}\n\n.label.difficulty {\n  padding-top: 0.6em;\n  color: #fbfdfa;\n  font-size: 12px;\n}\n\n.title {\n  font-size: 1.2em;\n}\n\n.diff-easy {\n  background-color: #42ebf4;\n}\n\n.diff-medium {\n  background-color: #92cf5c;\n}\n\n.diff-hard {\n  background-color: #dd0d1e;\n}\n\n.diff-super {\n  background-color: #8d16e2;\n}\n\n.top-buffer { margin-top:20px; }\n", ""]);
+exports.push([module.i, ".difficulty {\n  min-width: 65px;\n  margin-right: 10px;\n}\n\n.label.difficulty {\n  padding-top: 0.6em;\n  color: #fbfdfa;\n  font-size: 12px;\n}\n\n.title {\n  font-size: 1.2em;\n}\n\n.diff-easy {\n  background-color: #42ebf4;\n}\n\n.diff-medium {\n  background-color: #92cf5c;\n}\n\n.diff-hard {\n  background-color: #dd0d1e;\n}\n\n.diff-super {\n  background-color: #8d16e2;\n}\n\n.top-buffer { margin-top:20px; }\n\n.list-group-item { word-wrap: break-word; }\n", ""]);
 
 // exports
 
@@ -431,7 +435,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/problem-list/problem-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8\">\n\n      <app-new-problem></app-new-problem>\n    </div>\n  </div>\n\n\n  <div class=\"row top-buffer\">\n    <div class=\"col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8\">\n      <div class=\"list-group\">\n        <a class=\"list-group-item\" *ngFor=\"let problem of problems\" [routerLink]=\"['/problems',problem.id]\">\n          <strong> {{problem.id}}. {{problem.name}}</strong>\n          <span class=\"{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}\">{{problem.difficulty}}</span>\n        </a>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n"
+module.exports = "<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8\">\n\n      <app-new-problem></app-new-problem>\n    </div>\n  </div>\n\n\n  <div class=\"row top-buffer\">\n    <div class=\"col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8\">\n      <div class=\"list-group\">\n        <a class=\"list-group-item\" *ngFor=\"let problem of problems\" [routerLink]=\"['/problems',problem.id]\">\n\n          <span class=\"{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}\">{{problem.difficulty}}</span>\n          <strong> {{problem.id}}. {{problem.name}}</strong>\n\n        </a>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n"
 
 /***/ }),
 
@@ -522,7 +526,7 @@ var AuthService = (function () {
             responseType: 'token id_token',
             audience: 'https://yangyang729.auth0.com/userinfo',
             redirectUri: 'http://localhost:3000/callback',
-            scope: 'openid profile'
+            scope: 'openid profile read:messages write:messages'
         });
         this.userProfile.next(JSON.parse(localStorage.getItem('profile')));
     }
@@ -647,6 +651,18 @@ var DataService = (function () {
         // problem.id = this.problems.length + 1;
         // this.problems.push(problem);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        if (!problem.name) {
+            problem.name = 'No name given';
+        }
+        ;
+        if (!problem.desc) {
+            problem.desc = 'No description given';
+        }
+        ;
+        if (!problem.difficulty) {
+            problem.difficulty = 'easy';
+        }
+        ;
         return this.http.post('/api/v1/problems', problem, headers)
             .toPromise()
             .then(function (res) {

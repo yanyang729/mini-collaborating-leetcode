@@ -30,3 +30,5 @@
 }
 
 .top-buffer { margin-top:20px; }
+
+.list-group-item { word-wrap: break-word; }

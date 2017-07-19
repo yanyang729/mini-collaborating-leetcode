@@ -17,7 +17,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://yangyang729.auth0.com/userinfo',
     redirectUri: 'http://localhost:3000/callback',
-    scope: 'openid profile'
+    scope: 'openid profile read:messages write:messages'
   });
 
   constructor(public router: Router) {
