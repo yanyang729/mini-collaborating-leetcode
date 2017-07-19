@@ -9,6 +9,7 @@ import { ProblemDetailComponent } from './components/problem-detail/problem-deta
 import { NewProblemComponent } from './components/new-problem/new-problem.component';
 
 import { DataService } from './services/data.service';
+import { AuthService } from './services/auth.service';
 
 import { routing } from './app.routes';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -32,7 +33,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     {
       provide: 'data',
       useClass: DataService,
-    }
+    },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
