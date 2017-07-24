@@ -91,9 +91,10 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_new_problem_new_problem_component__ = __webpack_require__("../../../../../src/app/components/new-problem/new-problem.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_data_service__ = __webpack_require__("../../../../../src/app/services/data.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__("../../../../../src/app/components/navbar/navbar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_editor_component__ = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_navbar_navbar_component__ = __webpack_require__("../../../../../src/app/components/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_editor_component__ = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -101,6 +102,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -126,14 +128,14 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__components_problem_list_problem_list_component__["a" /* ProblemListComponent */],
             __WEBPACK_IMPORTED_MODULE_6__components_problem_detail_problem_detail_component__["a" /* ProblemDetailComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_new_problem_new_problem_component__["a" /* NewProblemComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__["a" /* NavbarComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__components_editor_editor_component__["a" /* EditorComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_editor_editor_component__["a" /* EditorComponent */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_10__app_routes__["a" /* routing */],
+            __WEBPACK_IMPORTED_MODULE_11__app_routes__["a" /* routing */],
         ],
         providers: [
             {
@@ -141,6 +143,7 @@ AppModule = __decorate([
                 useClass: __WEBPACK_IMPORTED_MODULE_8__services_data_service__["a" /* DataService */],
             },
             __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_10__services_collaboration_service__["a" /* CollaborationService */],
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
     })
@@ -194,7 +197,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@media screen {\n  #editor{\n    height: 600px;\n    width: 400px;\n    margin-left: 15px;\n  }\n  .lang-select{\n    width: 100px;\n    margin-right: 10px;\n  }\n  header .btn{\n    margin:0 5px;\n  }\n  footer .btn{\n    margin-top: 5px;\n  }\n  .modal-header button{\n    margin-top: 7px;\n  }\n}\n", ""]);
+exports.push([module.i, "@media screen {\n  #editor{\n    width:100%;\n    height:400px;\n    font-size: large;\n  }\n  .lang-select{\n    width: 100px;\n    margin-right: 10px;\n  }\n  #theme{\n    width: 100px;\n  }\n  header .btn{\n    margin:0 5px;\n  }\n  footer .btn{\n    margin-top: 5px;\n  }\n  .modal-header button{\n    margin-top: 7px;\n  }\n}\n", ""]);
 
 // exports
 
@@ -207,7 +210,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull-left lang-select\" id=\"language\" name=\"language\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n      <option *ngFor=\"let language of languages\" [value]=\"language\">\n        {{language}}\n      </option>\n    </select>\n\n\n    <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n      <span class=\"glyphicon glyphicon-refresh\"></span>\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title pull-left\" id=\"exampleModalLabel\">Warning</h3>\n            <button type=\"button\" class=\"close pull-right\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            Are you sure to reset?\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </header>\n  <br/>\n  <div class=\"row\">\n    <div id=\"editor\"></div>\n  </div>\n  <br/>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">Submit</button>\n  </footer>\n</section>\n\n"
+module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull-left lang-select\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n      <option *ngFor=\"let language of languages\" [value]=\"language\">\n        {{language}}\n      </option>\n    </select>\n\n\n    <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n      <span class=\"glyphicon glyphicon-refresh\"></span>\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title pull-left\" id=\"exampleModalLabel\">Warning</h3>\n            <button type=\"button\" class=\"close pull-right\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            Are you sure to reset?\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <select id=\"theme\" class=\"form-control pull-right \" [(ngModel)]=\"theme\" (change)=\"setTheme(theme)\">\n      <option *ngFor=\"let theme of themes\" [value]=\"theme\">{{theme}}</option>\n    </select>\n\n  </header>\n  <br/>\n  <div class=\"row\">\n    <div id=\"editor\"></div>\n  </div>\n  <br/>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">Submit</button>\n  </footer>\n</section>\n\n"
 
 /***/ }),
 
@@ -216,6 +219,7 @@ module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -227,9 +231,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var EditorComponent = (function () {
-    function EditorComponent() {
+    function EditorComponent(collaboration) {
+        this.collaboration = collaboration;
         this.languages = ['java', 'Python'];
+        this.themes = ['xcode', 'monokai'];
+        this.theme = 'xcode';
         this.language = 'java';
         this.defaultContent = {
             'java': 'public class Example{}',
@@ -239,16 +247,23 @@ var EditorComponent = (function () {
     EditorComponent.prototype.ngOnInit = function () {
         this.editor = ace.edit('editor');
         this.editor.$blockScrolling = Infinity;
-        this.editor.setTheme('ace/theme/monokai');
+        this.editor.setTheme('ace/theme/xcode');
         this.editor.getSession().setMode("ace/mode/java");
         this.editor.setValue(this.defaultContent['java']);
+        this.editor.setShowPrintMargin(false);
+        this.collaboration.init();
     };
     EditorComponent.prototype.setLanguage = function (language) {
         this.language = language;
         this.resetEditor();
     };
+    EditorComponent.prototype.setTheme = function (theme) {
+        this.theme = theme;
+        this.resetEditor();
+    };
     EditorComponent.prototype.resetEditor = function () {
         console.log('Resetting editor...');
+        this.editor.setTheme("ace/theme/" + this.theme);
         this.editor.getSession().setMode("ace/mode/" + this.language.toLocaleLowerCase());
         this.editor.setValue(this.defaultContent[this.language]);
     };
@@ -264,9 +279,10 @@ EditorComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object])
 ], EditorComponent);
 
+var _a;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
@@ -447,7 +463,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/problem-detail/problem-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"problem\">\n  <div class=\"col-xs-12 col-md-4\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n  </div>\n  <div class=\"hidden-xs col-xs-12 col-md-4\">\n    <app-editor></app-editor>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"problem\">\n  <div class=\"col-xs-12 col-md-6\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n  </div>\n  <hr class=\"hidden-xs col-xs-12 col-md-12\">\n  <div class=\"hidden-xs col-xs-12 col-md-12\">\n    <app-editor></app-editor>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -581,12 +597,10 @@ ProblemListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_filter__ = __webpack_require__("../../../../rxjs/add/operator/filter.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_filter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_auth0_js__ = __webpack_require__("../../../../auth0-js/src/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_auth0_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_auth0_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -603,12 +617,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var AuthService = (function () {
     function AuthService(router) {
         this.router = router;
-        this.userProfile = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"](undefined);
-        this.auth0 = new __WEBPACK_IMPORTED_MODULE_3_auth0_js__["WebAuth"]({
+        this.userProfile = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"](undefined);
+        this.auth0 = new auth0.WebAuth({
             clientID: '8WcyQrFQUUH9FTaUXbzWSFG9lJDmaL0g',
             domain: 'yangyang729.auth0.com',
             responseType: 'token id_token',
@@ -679,6 +692,42 @@ AuthService = __decorate([
 
 var _a;
 //# sourceMappingURL=auth.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/collaboration.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CollaborationService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CollaborationService = (function () {
+    function CollaborationService() {
+    }
+    CollaborationService.prototype.init = function () {
+        this.collaborationSocket = io(window.location.origin, { query: 'message=' + 'hahahaha' });
+        this.collaborationSocket.on('message', function (message) {
+            console.log('received ' + message);
+        });
+    };
+    return CollaborationService;
+}());
+CollaborationService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], CollaborationService);
+
+//# sourceMappingURL=collaboration.service.js.map
 
 /***/ }),
 

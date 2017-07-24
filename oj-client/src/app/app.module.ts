@@ -10,6 +10,7 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
 
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
+import { CollaborationService } from './services/collaboration.service'
 
 import { routing } from './app.routes';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -37,7 +38,7 @@ import { EditorComponent } from './components/editor/editor.component';
       useClass: DataService,
     },
     AuthService,
-
+    CollaborationService,
   ],
   bootstrap: [AppComponent]
 })

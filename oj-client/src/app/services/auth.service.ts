@@ -2,10 +2,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import * as auth0 from 'auth0-js';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
+
+declare const auth0: any;
 
 @Injectable()
 export class AuthService {

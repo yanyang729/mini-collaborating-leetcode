@@ -1,7 +1,7 @@
 <section>
   <header>
 
-    <select class="form-control pull-left lang-select" id="language" name="language"
+    <select class="form-control pull-left lang-select"
       [(ngModel)]="language" (change)="setLanguage(language)">
       <option *ngFor="let language of languages" [value]="language">
         {{language}}
@@ -34,6 +34,10 @@
         </div>
       </div>
     </div>
+
+    <select id="theme" class="form-control pull-right " [(ngModel)]="theme" (change)="setTheme(theme)">
+      <option *ngFor="let theme of themes" [value]="theme">{{theme}}</option>
+    </select>
 
   </header>
   <br/>
