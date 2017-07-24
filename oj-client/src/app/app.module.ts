@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
 
 import { routing } from './app.routes';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ProblemDetailComponent,
     NewProblemComponent,
     NavbarComponent,
+    EditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
       provide: 'data',
       useClass: DataService,
     },
-    AuthService
+    AuthService,
+
   ],
   bootstrap: [AppComponent]
 })

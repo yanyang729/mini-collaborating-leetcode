@@ -1,0 +1,24 @@
+<section>
+  <header>
+
+    <!--TODO-->
+    <select class="form-control pull-left lang-select" id="language" name="language"
+      [(ngModel)]="language" (change)="setLanguage(language)">
+      <option *ngFor="let language of languages" [value]="language">
+        {{language}}
+      </option>
+    </select>
+
+
+
+  </header>
+  <br/>
+  <div class="row">
+    <div id="editor"></div>
+  </div>
+  <footer>
+    <button type="button" class="btn btn-success pull-right" (click)="submit()">Submit</button>
+
+  </footer>
+</section>
+

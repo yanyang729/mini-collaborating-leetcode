@@ -25,7 +25,10 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/bootstrap/dist/js/bootstrap.js",
-        "../node_modules/auth0-js/build/auth0.min.js"
+        "../node_modules/auth0-js/build/auth0.min.js",
+        "../node_modules/ace-builds/src-min-noconflict/mode-java.js",
+        "../node_modules/ace-builds/src-min-noconflict/mode-python.js",
+        "../node_modules/ace-builds/src-min-noconflict/theme-monokai.js"
 
       ],
       "environmentSource": "environments/environment.ts",

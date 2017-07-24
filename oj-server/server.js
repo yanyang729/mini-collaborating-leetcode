@@ -22,3 +22,6 @@ app.listen(3000, function () {
 
 
 
+const http = require('http');
+const socketIO = require('socket.io');
+const io = socketIO();
