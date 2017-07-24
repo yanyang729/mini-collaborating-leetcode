@@ -93,6 +93,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__("../../../../../src/app/components/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_editor_component__ = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -100,6 +101,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -125,6 +127,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__components_problem_detail_problem_detail_component__["a" /* ProblemDetailComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_new_problem_new_problem_component__["a" /* NewProblemComponent */],
             __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_editor_editor_component__["a" /* EditorComponent */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -137,7 +140,7 @@ AppModule = __decorate([
                 provide: 'data',
                 useClass: __WEBPACK_IMPORTED_MODULE_8__services_data_service__["a" /* DataService */],
             },
-            __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */]
+            __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */],
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
     })
@@ -183,6 +186,91 @@ var routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* RouterModule 
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/editor/editor.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@media screen {\n  #editor{\n    height: 600px;\n    width: 400px;\n    margin-left: 15px;\n  }\n  .lang-select{\n    width: 100px;\n    margin-right: 10px;\n  }\n  header .btn{\n    margin:0 5px;\n  }\n  footer .btn{\n    margin-top: 5px;\n  }\n  .modal-header button{\n    margin-top: 7px;\n  }\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/editor/editor.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull-left lang-select\" id=\"language\" name=\"language\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n      <option *ngFor=\"let language of languages\" [value]=\"language\">\n        {{language}}\n      </option>\n    </select>\n\n\n    <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n      <span class=\"glyphicon glyphicon-refresh\"></span>\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title pull-left\" id=\"exampleModalLabel\">Warning</h3>\n            <button type=\"button\" class=\"close pull-right\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            Are you sure to reset?\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </header>\n  <br/>\n  <div class=\"row\">\n    <div id=\"editor\"></div>\n  </div>\n  <br/>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">Submit</button>\n  </footer>\n</section>\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/editor/editor.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var EditorComponent = (function () {
+    function EditorComponent() {
+        this.languages = ['java', 'Python'];
+        this.language = 'java';
+        this.defaultContent = {
+            'java': 'public class Example{}',
+            'Python': 'def example():',
+        };
+    }
+    EditorComponent.prototype.ngOnInit = function () {
+        this.editor = ace.edit('editor');
+        this.editor.$blockScrolling = Infinity;
+        this.editor.setTheme('ace/theme/monokai');
+        this.editor.getSession().setMode("ace/mode/java");
+        this.editor.setValue(this.defaultContent['java']);
+    };
+    EditorComponent.prototype.setLanguage = function (language) {
+        this.language = language;
+        this.resetEditor();
+    };
+    EditorComponent.prototype.resetEditor = function () {
+        console.log('Resetting editor...');
+        this.editor.getSession().setMode("ace/mode/" + this.language.toLocaleLowerCase());
+        this.editor.setValue(this.defaultContent[this.language]);
+    };
+    EditorComponent.prototype.submit = function () {
+        var userCodes = this.editor.getValue();
+        console.log(userCodes);
+    };
+    return EditorComponent;
+}());
+EditorComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-editor',
+        template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], EditorComponent);
+
+//# sourceMappingURL=editor.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/navbar/navbar.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -204,7 +292,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container\">\n    <!-- Brand and toggle get grouped for better mobile display -->\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a class=\"navbar-brand\" href=\"#\">Collaborative Mini Leetcode</a>\n    </div>\n\n    <!-- Collect the nav links, forms, and other content for toggling -->\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"!auth.isAuthenticated()\">\n          <form class=\"navbar-form\">\n            <button type=\"submit\" class=\"btn btn-default\" (click)=\"login()\">Sign In</button>\n          </form>\n        </li>\n\n        <li class=\"dropdown\" *ngIf=\"auth.isAuthenticated()\">\n          <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            {{profile?.name}}\n            <span class=\"caret\"></span>\n          </a>\n          <ul class=\"dropdown-menu\">\n            <li><a href=\"#\">My Profile</a></li>\n            <li><a href=\"#\">My Favorate</a></li>\n            <li><a href=\"#\">My Submission</a></li>\n            <li role=\"separator\" class=\"divider\"></li>\n            <li><a (click)=\"logout()\">Log Out</a></li>\n          </ul>\n        </li>\n      </ul>\n\n    </div><!-- /.navbar-collapse -->\n  </div><!-- /.container-fluid -->\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container\">\n    <!-- Brand and toggle get grouped for better mobile display -->\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a class=\"navbar-brand\" href=\"#\">Collaborative Mini Leetcode</a>\n    </div>\n\n    <!-- Collect the nav links, forms, and other content for toggling -->\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"!auth.isAuthenticated()\">\n          <form class=\"navbar-form\">\n            <button type=\"submit\" class=\"btn btn-primary\" (click)=\"login()\">Sign In</button>\n          </form>\n        </li>\n\n        <li class=\"dropdown\" *ngIf=\"auth.isAuthenticated()\">\n          <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            {{profile?.name}}\n            <span class=\"caret\"></span>\n          </a>\n          <ul class=\"dropdown-menu\">\n            <li><a href=\"#\">My Profile</a></li>\n            <li><a href=\"#\">My Favorate</a></li>\n            <li><a href=\"#\">My Submission</a></li>\n            <li role=\"separator\" class=\"divider\"></li>\n            <li><a (click)=\"logout()\">Log Out</a></li>\n          </ul>\n        </li>\n      </ul>\n\n    </div><!-- /.navbar-collapse -->\n  </div><!-- /.container-fluid -->\n</nav>\n"
 
 /***/ }),
 
@@ -277,7 +365,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/new-problem/new-problem.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form #formRef=\"ngForm\" *ngIf=\"auth.isAuthenticated()\">\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <input name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-primary pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n"
+module.exports = "<form #formRef=\"ngForm\" >\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <input name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-default pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n"
 
 /***/ }),
 
@@ -359,7 +447,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/problem-detail/problem-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"problem\">\n  <div class=\"col-xs-12 col-md-4\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"problem\">\n  <div class=\"col-xs-12 col-md-4\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n  </div>\n  <div class=\"hidden-xs col-xs-12 col-md-4\">\n    <app-editor></app-editor>\n  </div>\n</div>\n"
 
 /***/ }),
 

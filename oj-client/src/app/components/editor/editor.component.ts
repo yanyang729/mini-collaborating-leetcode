@@ -10,16 +10,19 @@ declare const ace:any;
 export class EditorComponent implements OnInit {
   editor: any;
   languages: string[] = ['java','Python'];
-  language: string = 'Java';
+  language: string = 'java';
   constructor() { }
+
   defaultContent = {
-    java:'public class example(){}...',
-    python: 'def example():'
+    'java': 'public class Example{}',
+    'Python': 'def example():',
+
   }
 
   ngOnInit() {
     this.editor = ace.edit('editor');
-    this.editor.setTheme('ace/theme/monokai')
+    this.editor.$blockScrolling = Infinity;
+    this.editor.setTheme('ace/theme/monokai');
     this.editor.getSession().setMode("ace/mode/java");
     this.editor.setValue(this.defaultContent['java']);
   }
@@ -38,6 +41,5 @@ export class EditorComponent implements OnInit {
   submit(){
     const userCodes = this.editor.getValue();
     console.log(userCodes)
-
   }
 }

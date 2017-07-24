@@ -1,7 +1,6 @@
 <section>
   <header>
 
-    <!--TODO-->
     <select class="form-control pull-left lang-select" id="language" name="language"
       [(ngModel)]="language" (change)="setLanguage(language)">
       <option *ngFor="let language of languages" [value]="language">
@@ -10,15 +9,40 @@
     </select>
 
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+      <span class="glyphicon glyphicon-refresh"></span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title pull-left" id="exampleModalLabel">Warning</h3>
+            <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure to reset?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetEditor()">Reset</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </header>
   <br/>
   <div class="row">
     <div id="editor"></div>
   </div>
+  <br/>
   <footer>
     <button type="button" class="btn btn-success pull-right" (click)="submit()">Submit</button>
-
   </footer>
 </section>
 

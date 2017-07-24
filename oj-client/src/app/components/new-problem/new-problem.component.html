@@ -1,4 +1,4 @@
-<form #formRef="ngForm" *ngIf="auth.isAuthenticated()">
+<form #formRef="ngForm" >
   <div class="form-group">
     <label for="problemName">Problem Name</label>
     <input name="problemName" id="problemName" type="text" class="form-control" placeholder="Input problem name" required
@@ -20,6 +20,6 @@
     </select>
   </div>
 
-  <button type="submit" class="btn btn-primary pull-right" (click)="addProblem()">Submit</button>
+  <button type="submit" class="btn btn-default pull-right" (click)="addProblem()">Submit</button>
 
 </form>
