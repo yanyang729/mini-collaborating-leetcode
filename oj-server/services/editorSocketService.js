@@ -23,8 +23,7 @@ module.exports = function (io) {
         sockect.on('change',(delta) => {
             console.log('change ' + delta + 'from ' + sessionId);
             forwardEvent(sockect.id,'change',delta);
-        })
-
+        });
 
         sockect.on('cursorMove',(cursor) =>{
             console.log('new cursor ' + cursor + 'from sessionId' + sessionId);
@@ -32,7 +31,7 @@ module.exports = function (io) {
             cursor['socketId'] = sockect.id;
             forwardEvent(sockect.id,'cursorMove',JSON.stringify(cursor))
         })
-    })
+    });
 
     const forwardEvent = function(socketId, eventName, dataString){
         const sessionId = socketIdToSessionId[socketId];
@@ -47,4 +46,4 @@ module.exports = function (io) {
             console.log('sessionId not in collaborations')
         }
     }
-}
+};

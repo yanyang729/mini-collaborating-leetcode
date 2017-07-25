@@ -770,7 +770,7 @@ var CollaborationService = (function () {
                 _this.clientsInfo[changeClientId] = {};
                 var css = document.createElement('style');
                 css.type = 'text/css';
-                css.innerHTML = "\n        .editor_cursor_" + changeClientId + " {\n        position:absolute;\n        background:" + __WEBPACK_IMPORTED_MODULE_1__assets_colors__["a" /* COLORS */][_this.clinetNum] + ";\n        z-index:100;\n        width:3px !important;\n        }";
+                css.innerHTML = "\n        .editor_cursor_" + changeClientId + " {\n          position:absolute;\n          background:" + __WEBPACK_IMPORTED_MODULE_1__assets_colors__["a" /* COLORS */][_this.clinetNum] + ";\n          z-index:100;\n          width:3px !important;\n        }";
                 document.body.appendChild(css);
                 _this.clinetNum++;
             }
