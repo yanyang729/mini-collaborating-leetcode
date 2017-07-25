@@ -220,6 +220,7 @@ module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -232,9 +233,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var EditorComponent = (function () {
-    function EditorComponent(collaboration) {
+    function EditorComponent(collaboration, route) {
         this.collaboration = collaboration;
+        this.route = route;
         this.languages = ['java', 'Python'];
         this.themes = ['xcode', 'monokai'];
         this.theme = 'xcode';
@@ -245,13 +248,30 @@ var EditorComponent = (function () {
         };
     }
     EditorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.sessionId = params['id'];
+        });
+        this.initEditor();
+    };
+    EditorComponent.prototype.initEditor = function () {
+        var _this = this;
         this.editor = ace.edit('editor');
         this.editor.$blockScrolling = Infinity;
         this.editor.setTheme('ace/theme/xcode');
         this.editor.getSession().setMode("ace/mode/java");
         this.editor.setValue(this.defaultContent['java']);
         this.editor.setShowPrintMargin(false);
-        this.collaboration.init();
+        document.getElementsByTagName('textarea')[0].focus();
+        this.editor.lastAppliedChanged = null;
+        this.collaboration.init(this.editor, this.sessionId);
+        //register change callback
+        this.editor.on('change', function (e) {
+            console.log('editor changed: ' + JSON.stringify(e));
+            if (_this.editor.lastAppliedChanged != e) {
+                _this.collaboration.change(JSON.stringify(e));
+            }
+        });
     };
     EditorComponent.prototype.setLanguage = function (language) {
         this.language = language;
@@ -279,10 +299,10 @@ EditorComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object])
 ], EditorComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
@@ -714,11 +734,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CollaborationService = (function () {
     function CollaborationService() {
     }
-    CollaborationService.prototype.init = function () {
-        this.collaborationSocket = io(window.location.origin, { query: 'message=' + 'hahahaha' });
-        this.collaborationSocket.on('message', function (message) {
-            console.log('received ' + message);
+    CollaborationService.prototype.init = function (editor, sessionId) {
+        this.collaborationSocket = io(window.location.origin, { query: 'sessionId=' + sessionId });
+        // this.collaborationSocket.on('message',(message) =>{
+        //   console.log('received ' + message)
+        // })
+        this.collaborationSocket.on('change', function (delta) {
+            console.log('collaboration: editor changes by' + delta);
+            delta = JSON.parse(delta);
+            editor.lastAppliedChanged = delta;
+            editor.getSession().getDocument().applyDeltas([delta]);
         });
+    };
+    CollaborationService.prototype.change = function (delta) {
+        this.collaborationSocket.emit('change', delta);
     };
     return CollaborationService;
 }());
