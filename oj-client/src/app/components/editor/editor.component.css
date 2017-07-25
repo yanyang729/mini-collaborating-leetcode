@@ -20,4 +20,12 @@
   .modal-header button{
     margin-top: 7px;
   }
+
+  .cursor {
+    /*position:absolute;*/
+    background: rgba(0, 250, 0, 0.5);
+    z-index: 40;
+    width: 2px!important
+  }
+
 }

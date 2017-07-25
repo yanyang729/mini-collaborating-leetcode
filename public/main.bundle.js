@@ -197,7 +197,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@media screen {\n  #editor{\n    width:100%;\n    height:400px;\n    font-size: large;\n  }\n  .lang-select{\n    width: 100px;\n    margin-right: 10px;\n  }\n  #theme{\n    width: 100px;\n  }\n  header .btn{\n    margin:0 5px;\n  }\n  footer .btn{\n    margin-top: 5px;\n  }\n  .modal-header button{\n    margin-top: 7px;\n  }\n}\n", ""]);
+exports.push([module.i, "@media screen {\n  #editor{\n    width:100%;\n    height:400px;\n    font-size: large;\n  }\n  .lang-select{\n    width: 100px;\n    margin-right: 10px;\n  }\n  #theme{\n    width: 100px;\n  }\n  header .btn{\n    margin:0 5px;\n  }\n  footer .btn{\n    margin-top: 5px;\n  }\n  .modal-header button{\n    margin-top: 7px;\n  }\n\n  .cursor {\n    /*position:absolute;*/\n    background: rgba(0, 250, 0, 0.5);\n    z-index: 40;\n    width: 2px!important\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -243,8 +243,8 @@ var EditorComponent = (function () {
         this.theme = 'xcode';
         this.language = 'java';
         this.defaultContent = {
-            'java': 'public class Example{}',
-            'Python': 'def example():',
+            'java': "public class Example {\n    public static void main(String[] args) { \n        // Type your Java code here \n        } \n    }",
+            'Python': "class Solution: \n   def example(): \n       # Write your Python code here"
         };
     }
     EditorComponent.prototype.ngOnInit = function () {
@@ -271,6 +271,12 @@ var EditorComponent = (function () {
             if (_this.editor.lastAppliedChanged != e) {
                 _this.collaboration.change(JSON.stringify(e));
             }
+        });
+        //cursor
+        this.editor.getSession().getSelection().on('changeCursor', function () {
+            var cursor = _this.editor.getSession().getSelection().getCursor();
+            console.log('cursor ' + JSON.stringify(cursor));
+            _this.collaboration.cursorMove(JSON.stringify(cursor));
         });
     };
     EditorComponent.prototype.setLanguage = function (language) {
@@ -720,6 +726,7 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_colors__ = __webpack_require__("../../../../../src/assets/colors.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CollaborationService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -731,10 +738,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var CollaborationService = (function () {
     function CollaborationService() {
+        this.clientsInfo = {};
+        this.clinetNum = 0;
     }
     CollaborationService.prototype.init = function (editor, sessionId) {
+        var _this = this;
         this.collaborationSocket = io(window.location.origin, { query: 'sessionId=' + sessionId });
         // this.collaborationSocket.on('message',(message) =>{
         //   console.log('received ' + message)
@@ -745,9 +756,34 @@ var CollaborationService = (function () {
             editor.lastAppliedChanged = delta;
             editor.getSession().getDocument().applyDeltas([delta]);
         });
+        this.collaborationSocket.on('cursorMove', function (cursor) {
+            console.log('cursor move: ' + cursor);
+            var session = editor.getSession();
+            cursor = JSON.parse(cursor);
+            var x = cursor['row'];
+            var y = cursor['column'];
+            var changeClientId = cursor['socketId'];
+            if (changeClientId in _this.clientsInfo) {
+                session.removeMarker(_this.clientsInfo[changeClientId]['marker']);
+            }
+            else {
+                _this.clientsInfo[changeClientId] = {};
+                var css = document.createElement('style');
+                css.type = 'text/css';
+                css.innerHTML = "\n        .editor_cursor_" + changeClientId + " {\n        position:absolute;\n        background:" + __WEBPACK_IMPORTED_MODULE_1__assets_colors__["a" /* COLORS */][_this.clinetNum] + ";\n        z-index:100;\n        width:3px !important;\n        }";
+                document.body.appendChild(css);
+                _this.clinetNum++;
+            }
+            var Range = ace.require('ace/range').Range;
+            var newMarker = session.addMarker(new Range(x, y, x, y + 1), 'editor_cursor_' + changeClientId, true);
+            _this.clientsInfo[changeClientId]['marker'] = newMarker;
+        });
     };
     CollaborationService.prototype.change = function (delta) {
         this.collaborationSocket.emit('change', delta);
+    };
+    CollaborationService.prototype.cursorMove = function (cursor) {
+        this.collaborationSocket.emit('cursorMove', cursor);
     };
     return CollaborationService;
 }());
@@ -850,6 +886,61 @@ DataService = __decorate([
 
 var _a;
 //# sourceMappingURL=data.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/assets/colors.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COLORS; });
+/**
+ * Created by yangyang on 7/25/17.
+ */
+/**
+ * Created by yangyang on 7/25/17.
+ */ var COLORS = [
+    "#0000ff",
+    "#a52a2a",
+    "#00ffff",
+    "#00008b",
+    "#008b8b",
+    "#a9a9a9",
+    "#006400",
+    "#bdb76b",
+    "#8b008b",
+    "#556b2f",
+    "#ff8c00",
+    "#9932cc",
+    "#8b0000",
+    "#e9967a",
+    "#9400d3",
+    "#ff00ff",
+    "#ffd700",
+    "#008000",
+    "#4b0082",
+    "#f0e68c",
+    "#add8e6",
+    "#e0ffff",
+    "#90ee90",
+    "#d3d3d3",
+    "#ffb6c1",
+    "#ffffe0",
+    "#00ff00",
+    "#ff00ff",
+    "#800000",
+    "#000080",
+    "#808000",
+    "#ffa500",
+    "#ffc0cb",
+    "#800080",
+    "#800080",
+    "#ff0000",
+    "#c0c0c0",
+    "#ffffff",
+    "#ffff00"
+];
+//# sourceMappingURL=colors.js.map
 
 /***/ }),
 

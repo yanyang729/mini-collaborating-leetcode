@@ -20,9 +20,14 @@ export class EditorComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   defaultContent = {
-    'java': 'public class Example{}',
-    'Python': 'def example():',
-
+    'java': `public class Example {
+    public static void main(String[] args) { 
+        // Type your Java code here 
+        } 
+    }`,
+    'Python': `class Solution: 
+   def example(): 
+       # Write your Python code here`
   }
 
 
@@ -52,6 +57,13 @@ export class EditorComponent implements OnInit {
       if ( this.editor.lastAppliedChanged != e){
         this.collaboration.change(JSON.stringify(e));
       }
+    })
+
+    //cursor
+    this.editor.getSession().getSelection().on('changeCursor',()=>{
+      const cursor = this.editor.getSession().getSelection().getCursor();
+      console.log('cursor ' + JSON.stringify(cursor));
+      this.collaboration.cursorMove(JSON.stringify(cursor));
     })
   }
 

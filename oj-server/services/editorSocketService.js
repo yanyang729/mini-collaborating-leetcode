@@ -20,19 +20,31 @@ module.exports = function (io) {
         collaborations[sessionId]['participants'].push(sockect.id);
 
         // event listeners
-        sockect.on('change',(delta) =>{
+        sockect.on('change',(delta) => {
             console.log('change ' + delta + 'from ' + sessionId);
-            if (sessionId in collaborations){
-                const participants = collaborations[sessionId]['participants'];
-                for (let item of participants){
-                    if( item != sockect.id){
-                        io.to(item).emit('change',delta);
-                    }
-                }
-            }else {
-                console.log('sessionId not in collaborations')
-            }
+            forwardEvent(sockect.id,'change',delta);
+        })
 
+
+        sockect.on('cursorMove',(cursor) =>{
+            console.log('new cursor ' + cursor + 'from sessionId' + sessionId);
+            cursor = JSON.parse(cursor);
+            cursor['socketId'] = sockect.id;
+            forwardEvent(sockect.id,'cursorMove',JSON.stringify(cursor))
         })
     })
+
+    const forwardEvent = function(socketId, eventName, dataString){
+        const sessionId = socketIdToSessionId[socketId];
+        if (sessionId in collaborations){
+            const participants = collaborations[sessionId]['participants'];
+            for (let item of participants) {
+                if (item != socketId){
+                    io.to(item).emit(eventName,dataString);
+                }
+            }
+        } else {
+            console.log('sessionId not in collaborations')
+        }
+    }
 }
