@@ -26,7 +26,7 @@ function get(key,callback) {
 
 
 function expire (key,timeSeconds) {
-    client.expires(key,timeSeconds);
+    client.expire(key,timeSeconds);
 }
 
 function quit() {
