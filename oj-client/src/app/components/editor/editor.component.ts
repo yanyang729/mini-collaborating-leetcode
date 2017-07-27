@@ -65,6 +65,9 @@ export class EditorComponent implements OnInit {
       console.log('cursor ' + JSON.stringify(cursor));
       this.collaboration.cursorMove(JSON.stringify(cursor));
     })
+
+    //restore
+    this.collaboration.restoreBuffer();
   }
 
   setLanguage(language: string): void{

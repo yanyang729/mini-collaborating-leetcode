@@ -278,6 +278,8 @@ var EditorComponent = (function () {
             console.log('cursor ' + JSON.stringify(cursor));
             _this.collaboration.cursorMove(JSON.stringify(cursor));
         });
+        //restore
+        this.collaboration.restoreBuffer();
     };
     EditorComponent.prototype.setLanguage = function (language) {
         this.language = language;
@@ -784,6 +786,9 @@ var CollaborationService = (function () {
     };
     CollaborationService.prototype.cursorMove = function (cursor) {
         this.collaborationSocket.emit('cursorMove', cursor);
+    };
+    CollaborationService.prototype.restoreBuffer = function () {
+        this.collaborationSocket.emit('restoreBuffer');
     };
     return CollaborationService;
 }());

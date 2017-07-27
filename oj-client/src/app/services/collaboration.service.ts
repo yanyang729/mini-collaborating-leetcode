@@ -23,7 +23,7 @@ export class CollaborationService {
     })
 
     this.collaborationSocket.on('cursorMove',(cursor) =>{
-      console.log('cursor move: ' + cursor);
+      console.log('cursor move: ' + cursor)
       const session = editor.getSession();
       cursor = JSON.parse(cursor);
       const x = cursor['row'];
@@ -56,5 +56,9 @@ export class CollaborationService {
   }
   cursorMove(cursor:string):void{
     this.collaborationSocket.emit('cursorMove',cursor)
+  }
+
+  restoreBuffer(): void{
+    this.collaborationSocket.emit('restoreBuffer');
   }
 }
