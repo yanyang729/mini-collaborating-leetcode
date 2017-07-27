@@ -6,17 +6,11 @@ const TIMEOUT = 3600;
 const redisClient = require('../modules/redisClient');
 
 module.exports = function (io) {
-    const socketIdToSessionId = {};
     const collaborations = {};
     const sessionPath ='/ojserver/';
     io.on('connection',(sockect) => {
-        // console.log(sockect);
         const sessionId = sockect.handshake.query['sessionId'];
 
-        // IS NOT NECESSARY?
-        socketIdToSessionId[sockect.id] = sessionId;
-
-        // TODO : REFACTOR BELOW
         if (sessionId in collaborations) {
             collaborations[sessionId]['participants'].push(sockect.id);
         }else {
@@ -37,27 +31,24 @@ module.exports = function (io) {
             })
         }
 
-        // event listeners
         sockect.on('change',(delta) => {
             console.log('change ' + delta + 'from ' + sessionId);
             collaborations[sessionId]['cachedInstructions'].push(['change',delta,Date.now()]);
-            forwardEvent(sockect.id,'change',delta);
+            forwardEvent(sockect.id,'change',delta,sessionId);
         });
 
         sockect.on('cursorMove',(cursor) =>{
             console.log('new cursor ' + cursor + 'from sessionId' + sessionId);
             cursor = JSON.parse(cursor);
             cursor['socketId'] = sockect.id;
-            forwardEvent(sockect.id,'cursorMove',JSON.stringify(cursor))
+            forwardEvent(sockect.id,'cursorMove',JSON.stringify(cursor),sessionId)
         })
 
         sockect.on('restoreBuffer',() => {
-            // const sessionId = socketIdToSessionId[socket.id];
             const cachedInstructions = collaborations[sessionId]['cachedInstructions'];
             for (let ins of cachedInstructions){
                 sockect.emit(ins[0],ins[1])
             }
-            forwardEvent(sockect.id,'change')
         })
 
         sockect.on('disconnect', () => {
@@ -89,8 +80,7 @@ module.exports = function (io) {
 
     });
 
-    const forwardEvent = function(socketId, eventName, dataString){
-        const sessionId = socketIdToSessionId[socketId];
+    const forwardEvent = function(socketId, eventName, dataString,sessionId){
         if (sessionId in collaborations){
             const participants = collaborations[sessionId]['participants'];
             for (let item of participants) {
