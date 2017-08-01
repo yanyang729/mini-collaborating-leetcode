@@ -210,7 +210,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull-left lang-select\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n      <option *ngFor=\"let language of languages\" [value]=\"language\">\n        {{language}}\n      </option>\n    </select>\n\n\n    <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n      <span class=\"glyphicon glyphicon-refresh\"></span>\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title pull-left\" id=\"exampleModalLabel\">Warning</h3>\n            <button type=\"button\" class=\"close pull-right\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            Are you sure to reset?\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <select id=\"theme\" class=\"form-control pull-right \" [(ngModel)]=\"theme\" (change)=\"setTheme(theme)\">\n      <option *ngFor=\"let theme of themes\" [value]=\"theme\">{{theme}}</option>\n    </select>\n\n  </header>\n  <br/>\n  <div class=\"row\">\n    <div id=\"editor\"></div>\n  </div>\n  <br/>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">Submit</button>\n  </footer>\n</section>\n\n"
+module.exports = "<section>\n  <header>\n\n    <select class=\"form-control pull-left lang-select\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n      <option *ngFor=\"let language of languages\" [value]=\"language\">\n        {{language}}\n      </option>\n    </select>\n\n\n    <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n      <span class=\"glyphicon glyphicon-refresh\"></span>\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title pull-left\" id=\"exampleModalLabel\">Warning</h3>\n            <button type=\"button\" class=\"close pull-right\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            Are you sure to reset?\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <select id=\"theme\" class=\"form-control pull-right \" [(ngModel)]=\"theme\" (change)=\"setTheme(theme)\">\n      <option *ngFor=\"let theme of themes\" [value]=\"theme\">{{theme}}</option>\n    </select>\n\n  </header>\n  <br/>\n  <div class=\"row\">\n    <div id=\"editor\"></div>\n  </div>\n  <div>\n  {{output}}\n  </div>\n  <br/>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">Submit</button>\n  </footer>\n</section>\n\n"
 
 /***/ }),
 
@@ -231,17 +231,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 
 
 
 var EditorComponent = (function () {
-    function EditorComponent(collaboration, route) {
+    function EditorComponent(collaboration, route, data) {
         this.collaboration = collaboration;
         this.route = route;
+        this.data = data;
         this.languages = ['java', 'Python'];
         this.themes = ['xcode', 'monokai'];
         this.theme = 'xcode';
         this.language = 'java';
+        this.output = '';
         this.defaultContent = {
             'java': "public class Example {\n    public static void main(String[] args) { \n        // Type your Java code here \n        } \n    }",
             'Python': "class Solution: \n   def example(): \n       # Write your Python code here"
@@ -294,10 +299,19 @@ var EditorComponent = (function () {
         this.editor.setTheme("ace/theme/" + this.theme);
         this.editor.getSession().setMode("ace/mode/" + this.language.toLocaleLowerCase());
         this.editor.setValue(this.defaultContent[this.language]);
+        this.output = '';
     };
     EditorComponent.prototype.submit = function () {
+        var _this = this;
+        this.output = '';
         var userCodes = this.editor.getValue();
         console.log(userCodes);
+        var codes = {
+            userCodes: userCodes,
+            lang: this.language.toLocaleLowerCase()
+        };
+        // this.data.buildAndRun(codes).then(res => this.output = res.text)
+        this.data.buildAndRun(codes).subscribe(function (observer) { return _this.output = observer.text; });
     };
     return EditorComponent;
 }());
@@ -307,7 +321,8 @@ EditorComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object])
+    __param(2, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Inject */])('data')),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, Object])
 ], EditorComponent);
 
 var _a, _b;
@@ -811,6 +826,8 @@ CollaborationService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -821,6 +838,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -858,6 +876,7 @@ var DataService = (function () {
         // problem.id = this.problems.length + 1;
         // this.problems.push(problem);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers });
         if (!problem.name) {
             problem.name = 'No name given';
         }
@@ -870,13 +889,23 @@ var DataService = (function () {
             problem.difficulty = 'easy';
         }
         ;
-        return this.http.post('/api/v1/problems', problem, headers)
+        return this.http.post('/api/v1/problems', problem, options)
             .toPromise()
             .then(function (res) {
             _this.getProblems();
             return res.json();
         })
             .catch(this.handleError);
+    };
+    // buildAndRun(data:any):Promise<Result>{
+    //   const headers = new Headers({'content-type':'application/json'});
+    //   const options: RequestOptions = new RequestOptions({headers:headers})
+    //   return this.http.post('/api/v1/build_and_run',data,options).toPromise().then( res => res.json())
+    // }
+    DataService.prototype.buildAndRun = function (data) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers });
+        return this.http.post('/api/v1/build_and_run', data, options).map(function (res) { return res.json(); });
     };
     DataService.prototype.handleError = function (error) {
         console.error('An error occured', error);
@@ -886,7 +915,7 @@ var DataService = (function () {
 }());
 DataService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */]) === "function" && _a || Object])
 ], DataService);
 
 var _a;

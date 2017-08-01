@@ -55,7 +55,8 @@ router.post('/build_and_run',jsonParser,(req,res) => {
             data['text'] = text;
             res.json(data);
         }
-    )
+    );
+    
 })
 
 module.exports = router;

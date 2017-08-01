@@ -28,7 +28,7 @@ BUILD_COMMANDS = {
 }
 
 EXCUTE_COMMANDS = {
-    'java':'javac',
+    'java':'java',
     'python':'python'
 }
 
@@ -65,6 +65,7 @@ def build_and_run(code,lang):
     make_dir(source_file_host_dir)
 
     #write code files
+    # '/tmp/d7b58e21-33fe-49e4-90c4-e709458f020e/Example.java'
     with open('%s/%s' % (source_file_host_dir, SOURCE_FILE_NAMES[lang]),'w') as f:
         f.write(code)
 
@@ -80,26 +81,28 @@ def build_and_run(code,lang):
         result['build'] = 'ok'
     except ContainerError as e:
         print('build failed')
-        result['build'] = e.stderr
+        result['build'] = e.stderr.decode('utf-8')
         shutil.rmtree(source_file_host_dir)
+        print(result)
         return result
 
     #run scripts inside docker
     try:
         log = client.containers.run(
             image=IMAGE_NAME,
-            command='%s %s' % (BUILD_COMMANDS[lang], BINARY_NAMES[lang]),
+            command='%s %s' % (EXCUTE_COMMANDS[lang], BINARY_NAMES[lang]),
             volumes={source_file_host_dir: {'bind':source_file_guest_dir, 'mode':'rw'}},
             working_dir=source_file_guest_dir
         )
 
         print('executed')
-        result['run'] = log
+        result['run'] = log.decode('utf-8')
+
     except ContainerError as e:
         print('execution failed')
-        result['run'] = e.stderr
+        result['run'] = e.stderr.decode('utf-8')
         shutil.rmtree(source_file_host_dir)
         return result
-    print(result)
 
-
+    shutil.rmtree(source_file_host_dir)
+    return result

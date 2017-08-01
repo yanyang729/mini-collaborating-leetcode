@@ -10,6 +10,7 @@
 
 # IDEs and editors
 .idea
+.idea/
 .project
 .classpath
 .c9/
@@ -40,3 +41,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/oj-client/node_modules
+/oj-server/node_modules
+executor/.idea
+dump*
+*.xml
+*.pyc
