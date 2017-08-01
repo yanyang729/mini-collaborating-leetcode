@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CollaborationService } from '../../services/collaboration.service'
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -16,8 +16,11 @@ export class EditorComponent implements OnInit {
   themes:string[] = ['xcode','monokai'];
   theme:string = 'xcode';
   language: string = 'java';
+  output:string = ''; 
   constructor(private collaboration: CollaborationService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              @Inject('data') private data,
+            ) { }
 
   defaultContent = {
     'java': `public class Example {
@@ -85,10 +88,20 @@ export class EditorComponent implements OnInit {
     this.editor.setTheme(`ace/theme/${this.theme}`);
     this.editor.getSession().setMode(`ace/mode/${this.language.toLocaleLowerCase()}`);
     this.editor.setValue(this.defaultContent[this.language]);
+    this.output = '';
   }
 
   submit(){
+    this.output = '';
     const userCodes = this.editor.getValue();
     console.log(userCodes)
+    const codes = {
+      userCodes:userCodes,
+      lang: this.language.toLocaleLowerCase()
+    }
+    // this.data.buildAndRun(codes).then(res => this.output = res.text)
+    this.data.buildAndRun(codes).subscribe(
+      observer => this.output =  observer.text
+    )
   }
 }
