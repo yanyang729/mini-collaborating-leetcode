@@ -28,9 +28,10 @@ export class EditorComponent implements OnInit {
         // Type your Java code here 
         } 
     }`,
-    'Python': `class Solution: 
-   def example(): 
-       # Write your Python code here`
+    'Python': 
+    `class Solution: 
+    def example(self): 
+        # Write your Python code here`
   }
 
 

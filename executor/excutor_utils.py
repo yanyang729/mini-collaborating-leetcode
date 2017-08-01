@@ -14,7 +14,7 @@ TEMP_BUILD_DIR = '%s/tmp' % CURRENT_DIR
 
 SOURCE_FILE_NAMES = {
     'java':'Example.java',
-    'pyhton':'example.py'
+    'python':'example.py'
 }
 
 BINARY_NAMES = {
@@ -24,12 +24,12 @@ BINARY_NAMES = {
 
 BUILD_COMMANDS = {
     'java':'javac',
-    'pyhton':'python'
+    'python':'python3'
 }
 
 EXCUTE_COMMANDS = {
     'java':'java',
-    'python':'python'
+    'python':'python3'
 }
 
 
@@ -69,6 +69,10 @@ def build_and_run(code,lang):
     with open('%s/%s' % (source_file_host_dir, SOURCE_FILE_NAMES[lang]),'w') as f:
         f.write(code)
 
+    if lang == 'python':
+        with open('%s/%s' % (source_file_host_dir, SOURCE_FILE_NAMES[lang]), 'a') as f:
+            f.write("""\nprint(Solution().example())""")
+
     #build scripts inside docker
     try:
         client.containers.run(
@@ -94,6 +98,8 @@ def build_and_run(code,lang):
             volumes={source_file_host_dir: {'bind':source_file_guest_dir, 'mode':'rw'}},
             working_dir=source_file_guest_dir
         )
+
+
 
         print('executed')
         result['run'] = log.decode('utf-8')

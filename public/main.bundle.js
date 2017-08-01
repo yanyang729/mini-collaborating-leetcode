@@ -249,7 +249,7 @@ var EditorComponent = (function () {
         this.output = '';
         this.defaultContent = {
             'java': "public class Example {\n    public static void main(String[] args) { \n        // Type your Java code here \n        } \n    }",
-            'Python': "class Solution: \n   def example(): \n       # Write your Python code here"
+            'Python': "class Solution: \n    def example(self): \n        # Write your Python code here"
         };
     }
     EditorComponent.prototype.ngOnInit = function () {
