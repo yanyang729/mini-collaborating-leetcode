@@ -24,7 +24,7 @@ const editorSocketService = require('./services/editorSocketService.js')(io);
 
 const server = http.createServer(app);
 io.attach(server);
-server.listen(3000);
+server.listen(process.argv[2]);
 
 server.on('error',onError);
 server.on('listening',onListening);

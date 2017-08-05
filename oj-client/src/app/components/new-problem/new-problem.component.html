@@ -1,4 +1,4 @@
-<form #formRef="ngForm" >
+<form #formRef="ngForm" *ngIf="auth.isAuthenticated()">
   <div class="form-group">
     <label for="problemName">Problem Name</label>
     <input name="problemName" id="problemName" type="text" class="form-control" placeholder="Input problem name" required
@@ -7,8 +7,9 @@
 
   <div class="form-group">
     <label for="problemDesc">Problem Description</label>
-    <input name="problemDesc" id="problemDesc" type="text" class="form-control" placeholder="Input problem description" required
+    <textarea rows="3" name="problemDesc" id="problemDesc" type="text" class="form-control" placeholder="Input problem description" required
            [(ngModel)]="newProblem.desc">
+    </textarea>
   </div>
 
   <div class="form-group">
@@ -23,3 +24,7 @@
   <button type="submit" class="btn btn-default pull-right" (click)="addProblem()">Submit</button>
 
 </form>
+
+<p *ngIf="!auth.isAuthenticated()">
+  Please Sign in to add your own questions and solve them with your friends!
+</p>

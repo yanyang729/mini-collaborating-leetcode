@@ -9,6 +9,7 @@ module.exports = function (io) {
     const collaborations = {};
     const sessionPath ='/ojserver/';
     io.on('connection',(sockect) => {
+        console.log(sockect)
         const sessionId = sockect.handshake.query['sessionId'];
 
         if (sessionId in collaborations) {

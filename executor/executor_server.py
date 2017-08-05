@@ -1,4 +1,4 @@
-import excutor_utils as eu
+import executor_utils as eu
 from flask import Flask, jsonify, request
 import json
 app = Flask(__name__)
@@ -9,7 +9,7 @@ def hello():
 
 @app.route('/build_and_run', methods=['POST'])
 def build_and_run():
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     if 'code' not in data or 'lang' not in data:
         return 'you should provide both code and lang'
     code = data['code']
@@ -20,5 +20,6 @@ def build_and_run():
 
 
 if __name__ == '__main__':
+    import sys
     eu.load_image()
-    app.run(debug=True)
+    app.run(port=sys.argv[1])

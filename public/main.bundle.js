@@ -64,7 +64,7 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
@@ -316,7 +316,7 @@ var EditorComponent = (function () {
     return EditorComponent;
 }());
 EditorComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-editor',
         template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
@@ -390,7 +390,7 @@ var NavbarComponent = (function () {
     return NavbarComponent;
 }());
 NavbarComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-navbar',
         template: __webpack_require__("../../../../../src/app/components/navbar/navbar.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/navbar/navbar.component.css")]
@@ -424,7 +424,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/new-problem/new-problem.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form #formRef=\"ngForm\" >\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <input name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-default pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n"
+module.exports = "<form #formRef=\"ngForm\" *ngIf=\"auth.isAuthenticated()\">\n  <div class=\"form-group\">\n    <label for=\"problemName\">Problem Name</label>\n    <input name=\"problemName\" id=\"problemName\" type=\"text\" class=\"form-control\" placeholder=\"Input problem name\" required\n           [(ngModel)]=\"newProblem.name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDesc\">Problem Description</label>\n    <textarea rows=\"3\" name=\"problemDesc\" id=\"problemDesc\" type=\"text\" class=\"form-control\" placeholder=\"Input problem description\" required\n           [(ngModel)]=\"newProblem.desc\">\n    </textarea>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"problemDiff\">Problem Difficulty</label>\n    <select name=\"problemDiff\" id=\"problemDiff\" class=\"form-control\" required [(ngModel)]=\"newProblem.difficulty\">\n      <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n        {{difficulty}}\n      </option>\n    </select>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-default pull-right\" (click)=\"addProblem()\">Submit</button>\n\n</form>\n\n<p *ngIf=\"!auth.isAuthenticated()\">\n  Please Sign in to add your own questions and solve them with your friends!\n</p>\n"
 
 /***/ }),
 
@@ -471,7 +471,7 @@ var NewProblemComponent = (function () {
     return NewProblemComponent;
 }());
 NewProblemComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-new-problem',
         template: __webpack_require__("../../../../../src/app/components/new-problem/new-problem.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/new-problem/new-problem.component.css")]
@@ -547,7 +547,7 @@ var ProblemDetailComponent = (function () {
     return ProblemDetailComponent;
 }());
 ProblemDetailComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-problem-detail',
         template: __webpack_require__("../../../../../src/app/components/problem-detail/problem-detail.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/problem-detail/problem-detail.component.css")]
@@ -619,7 +619,7 @@ var ProblemListComponent = (function () {
     return ProblemListComponent;
 }());
 ProblemListComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-problem-list',
         template: __webpack_require__("../../../../../src/app/components/problem-list/problem-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/problem-list/problem-list.component.css")],
@@ -669,7 +669,7 @@ var AuthService = (function () {
             domain: 'yangyang729.auth0.com',
             responseType: 'token id_token',
             audience: 'https://yangyang729.auth0.com/userinfo',
-            redirectUri: 'http://localhost:3000/callback',
+            redirectUri: 'http://www.server.com',
             scope: 'openid profile read:messages write:messages'
         });
         this.userProfile.next(JSON.parse(localStorage.getItem('profile')));

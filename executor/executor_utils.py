@@ -5,7 +5,7 @@ import uuid
 
 from docker.errors import APIError, ContainerError, ImageNotFound
 
-client = docker.from_env()
+client = docker.from_env(version='auto')
 
 IMAGE_NAME = 'yangyang729729/cs503-oj'
 CURRENT_DIR = os.path.dirname(os.path.relpath(__file__))

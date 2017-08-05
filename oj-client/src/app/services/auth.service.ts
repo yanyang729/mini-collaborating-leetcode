@@ -17,7 +17,7 @@ export class AuthService {
     domain: 'yangyang729.auth0.com',
     responseType: 'token id_token',
     audience: 'https://yangyang729.auth0.com/userinfo',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: 'http://www.server.com',
     scope: 'openid profile read:messages write:messages'
   });
 

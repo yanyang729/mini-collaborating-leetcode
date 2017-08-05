@@ -7,7 +7,7 @@ const problemService = require('../services/problemService');
 
 const Client = require('node-rest-client').Client;
 const client = new Client();
-const EXE_URL = 'http://localhost:5000/build_and_run';
+const EXE_URL = 'http://www.executor.com/build_and_run';
 client.registerMethod('build_and_run',EXE_URL,'POST');
 
 // GET /api/v1/problems
