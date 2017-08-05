@@ -17,8 +17,8 @@ export class AuthService {
     domain: 'yangyang729.auth0.com',
     responseType: 'token id_token',
     audience: 'https://yangyang729.auth0.com/userinfo',
-    redirectUri: 'http://www.server.com',
-    scope: 'openid profile read:messages write:messages'
+    redirectUri: 'http://localhost:3000',
+    scope: 'openid profile'
   });
 
   constructor(public router: Router) {
