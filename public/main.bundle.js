@@ -669,7 +669,7 @@ var AuthService = (function () {
             domain: 'yangyang729.auth0.com',
             responseType: 'token id_token',
             audience: 'https://yangyang729.auth0.com/userinfo',
-            redirectUri: 'http://localhost:3000',
+            redirectUri: 'http://35.161.214.242:3000',
             scope: 'openid profile'
         });
         this.userProfile.next(JSON.parse(localStorage.getItem('profile')));
