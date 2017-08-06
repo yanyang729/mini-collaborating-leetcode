@@ -42,9 +42,6 @@ make hiredis lua jemalloc linenoise geohash-int
 sudo make install
 cd utils
 sudo ./install_server.sh
-
-
-
 ```
 
 flask code excutor server:
@@ -59,12 +56,22 @@ git clone https://github.com/yanyang729/mini-collaborating-leetcode.git
 source activate oj-executor
 cd oj-excutor/
 pip install -r requirements.txt 
-
 # add docker groups: https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo
 sudo groupadd docker
 sudo gpasswd -a $USER docker
 newgrp docker
 python executor_server.py 5000
+```
+
+run server.js in background and exit ssh
+```bash
+npm install pm2 -g
+pm2 start app.js
+```
+
+run server.js in background and exit ssh
+```bash
+nohup python3 executor_server.py &
 ```
 
 
