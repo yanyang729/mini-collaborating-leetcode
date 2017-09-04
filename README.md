@@ -78,4 +78,3 @@ nohup python3 executor_server.py &
 Trouble shotting:
 - you need to tell the Flask Dev webserver to run on 0.0.0.0 instead of localhost
 - redis need dependencie
-- share links to friends to invite coding together
