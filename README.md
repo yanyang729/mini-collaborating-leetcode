@@ -35,10 +35,11 @@ sudo npm install -g nodemon
 wget http://download.redis.io/releases/redis-3.2.6.tar.gz
 tar xzf redis-3.2.6.tar.gz
 cd redis-3.2.6
-sudo apt-get make
+sudo apt install make
 # install deps for redis
 cd deps
 make hiredis lua jemalloc linenoise geohash-int
+cd ..
 sudo make install
 cd utils
 sudo ./install_server.sh
