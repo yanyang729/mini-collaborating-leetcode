@@ -3,7 +3,7 @@
 ## About
 This project is to build a web app that people can add their coding problems and edit the code on the same page just like google doc. 
 
-[Click here to see the demo](http://35.161.214.242:3000/problems). You can share the problem url with others so that everyone who has the link can editor on the same page.
+[Click here to see the demo](http://35.163.32.217:3000/problems). You can share the problem url with others so that everyone who has the link can editor on the same page.
 
 ## Progress
 A web app with following functions already been added:
